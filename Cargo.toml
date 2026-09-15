@@ -1,0 +1,21 @@
+[package]
+name = "tauri-plugin-mobile-keystore"
+version = "0.1.0"
+description = "Encrypted key-value storage backed by the Android Keystore (iOS Keychain planned), with no biometric-enrollment requirement."
+authors = ["Abdullah <abdullah72308@gmail.com>"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Abdullah-5603/tauri-plugin-mobile-keystore"
+edition = "2021"
+rust-version = "1.77.2"
+keywords = ["tauri", "plugin", "keystore", "keychain", "android"]
+categories = ["gui", "os::android-apis"]
+links = "tauri-plugin-mobile-keystore"
+
+[dependencies]
+tauri = { version = "2" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+[build-dependencies]
+tauri-plugin = { version = "2", features = ["build"] }

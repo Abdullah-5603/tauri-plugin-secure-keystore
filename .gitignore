@@ -1,0 +1,27 @@
+# Rust
+target
+Cargo.lock
+!examples/**/Cargo.lock
+
+# Node
+node_modules
+dist-js
+dist
+*.log
+
+# Android build output (any depth — the plugin's own android/ AND every
+# example app's src-tauri/gen/android/ produce these)
+**/android/build
+**/android/.gradle
+**/android/.tauri
+**/android/local.properties
+**/gen/android/**/build
+**/gen/android/**/.gradle
+**/gen/android/local.properties
+**/gen/android/.idea
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
