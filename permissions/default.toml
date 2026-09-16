@@ -1,5 +1,19 @@
 "$schema" = "schemas/schema.json"
 
 [default]
-description = "Allows storing, reading, and deleting encrypted key-value items."
-permissions = ["allow-set-item", "allow-get-item", "allow-delete-item"]
+description = """
+Allows storing, reading, and deleting encrypted key-value items, and
+managing the optional app-level lock password used by `requireAuth:
+"password"` items.
+"""
+permissions = [
+    "allow-set-item",
+    "allow-get-item",
+    "allow-delete-item",
+    "allow-set-lock-password",
+    "allow-change-lock-password",
+    "allow-remove-lock-password",
+    "allow-unlock-with-password",
+    "allow-lock-keystore",
+    "allow-lock-status",
+]

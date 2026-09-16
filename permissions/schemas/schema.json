@@ -295,6 +295,18 @@
       "type": "string",
       "oneOf": [
         {
+          "description": "Enables the change_lock_password command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-change-lock-password",
+          "markdownDescription": "Enables the change_lock_password command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the change_lock_password command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-change-lock-password",
+          "markdownDescription": "Denies the change_lock_password command without any pre-configured scope."
+        },
+        {
           "description": "Enables the delete_item command without any pre-configured scope.",
           "type": "string",
           "const": "allow-delete-item",
@@ -319,6 +331,42 @@
           "markdownDescription": "Denies the get_item command without any pre-configured scope."
         },
         {
+          "description": "Enables the lock_keystore command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-lock-keystore",
+          "markdownDescription": "Enables the lock_keystore command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the lock_keystore command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-lock-keystore",
+          "markdownDescription": "Denies the lock_keystore command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the lock_status command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-lock-status",
+          "markdownDescription": "Enables the lock_status command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the lock_status command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-lock-status",
+          "markdownDescription": "Denies the lock_status command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the remove_lock_password command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-remove-lock-password",
+          "markdownDescription": "Enables the remove_lock_password command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the remove_lock_password command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-remove-lock-password",
+          "markdownDescription": "Denies the remove_lock_password command without any pre-configured scope."
+        },
+        {
           "description": "Enables the set_item command without any pre-configured scope.",
           "type": "string",
           "const": "allow-set-item",
@@ -331,10 +379,34 @@
           "markdownDescription": "Denies the set_item command without any pre-configured scope."
         },
         {
-          "description": "Allows storing, reading, and deleting encrypted key-value items.\n#### This default permission set includes:\n\n- `allow-set-item`\n- `allow-get-item`\n- `allow-delete-item`",
+          "description": "Enables the set_lock_password command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-set-lock-password",
+          "markdownDescription": "Enables the set_lock_password command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the set_lock_password command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-set-lock-password",
+          "markdownDescription": "Denies the set_lock_password command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the unlock_with_password command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-unlock-with-password",
+          "markdownDescription": "Enables the unlock_with_password command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the unlock_with_password command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-unlock-with-password",
+          "markdownDescription": "Denies the unlock_with_password command without any pre-configured scope."
+        },
+        {
+          "description": "Allows storing, reading, and deleting encrypted key-value items, and\nmanaging the optional app-level lock password used by `requireAuth:\n\"password\"` items.\n\n#### This default permission set includes:\n\n- `allow-set-item`\n- `allow-get-item`\n- `allow-delete-item`\n- `allow-set-lock-password`\n- `allow-change-lock-password`\n- `allow-remove-lock-password`\n- `allow-unlock-with-password`\n- `allow-lock-keystore`\n- `allow-lock-status`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "Allows storing, reading, and deleting encrypted key-value items.\n#### This default permission set includes:\n\n- `allow-set-item`\n- `allow-get-item`\n- `allow-delete-item`"
+          "markdownDescription": "Allows storing, reading, and deleting encrypted key-value items, and\nmanaging the optional app-level lock password used by `requireAuth:\n\"password\"` items.\n\n#### This default permission set includes:\n\n- `allow-set-item`\n- `allow-get-item`\n- `allow-delete-item`\n- `allow-set-lock-password`\n- `allow-change-lock-password`\n- `allow-remove-lock-password`\n- `allow-unlock-with-password`\n- `allow-lock-keystore`\n- `allow-lock-status`"
         }
       ]
     }

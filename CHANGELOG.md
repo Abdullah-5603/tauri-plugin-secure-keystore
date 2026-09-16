@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.0.3-beta.1
+
+- **Optional per-item lock.** `setItem`/`getItem`/`deleteItem` accept a new
+  `requireAuth` option (`"os"` or `"password"`); omitting it keeps the
+  existing silent, no-prompt behavior exactly as before — this is
+  opt-in, not a behavior change for existing callers.
+  - `requireAuth: "os"` gates the item behind the platform's own
+    device-authentication prompt — Android `BiometricPrompt` (biometric,
+    with PIN/pattern/password as the OS's built-in fallback) or the iOS
+    Face ID / Touch ID / passcode sheet. Mobile only; rejected with a clear
+    `UnsupportedPlatform` error on desktop.
+  - `requireAuth: "password"` gates the item behind an app-managed
+    password/PIN/pattern string (a PIN or pattern is just a string from
+    your own UI — there's no separate code path), via envelope encryption
+    with an Argon2id-derived key. Works on every platform, including
+    desktop.
+- New commands/JS functions to manage the app-level password:
+  `setLockPassword`, `changeLockPassword`, `removeLockPassword`,
+  `unlockWithPassword`, `lock`, `lockStatus`.
+- New `Error` variants: `Locked`, `NoLockPasswordSet`,
+  `LockPasswordAlreadySet`, `WeakPassword`, `AuthFailed`,
+  `TooManyAttempts`, `UnsupportedPlatform`, `ReservedKey`.
+- Hardening on the password/PIN/pattern lock: Argon2id params read from
+  stored metadata are bounds-checked before use (a tampered blob can't turn
+  `unlockWithPassword` into a memory/CPU DoS); `unlockWithPassword`/
+  `changeLockPassword`/`removeLockPassword` share an exponential-backoff
+  rate limiter on wrong guesses; key material is wrapped in `Zeroizing`
+  end-to-end; `setLockPassword`/`changeLockPassword`/`removeLockPassword`/
+  `unlockWithPassword` are serialized against each other to remove a
+  check-then-write race.
+- No breaking changes: the JS API's new `requireAuth` option is optional on
+  all three existing functions, and the Rust `SecureKeystoreExt` trait is
+  unchanged.
+
 ## 0.0.2
 
 - **Desktop: encrypted key-value storage via the OS credential store**

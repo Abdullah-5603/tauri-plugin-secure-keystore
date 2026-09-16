@@ -46,4 +46,26 @@ impl<R: Runtime> SecureKeystore<R> {
             .run_mobile_plugin("deleteItem", payload)
             .map_err(Into::into)
     }
+
+    /// `requireAuth: "os"` variants: stored separately from the plain
+    /// (and password-protected) items, behind a native biometric /
+    /// device-credential prompt on every call. See the Android/iOS plugin
+    /// sources for the native side of this.
+    pub fn set_item_os(&self, payload: SetItemRequest) -> crate::Result<()> {
+        self.0
+            .run_mobile_plugin("setItemAuth", payload)
+            .map_err(Into::into)
+    }
+
+    pub fn get_item_os(&self, payload: ItemKey) -> crate::Result<GetItemResponse> {
+        self.0
+            .run_mobile_plugin("getItemAuth", payload)
+            .map_err(Into::into)
+    }
+
+    pub fn delete_item_os(&self, payload: ItemKey) -> crate::Result<()> {
+        self.0
+            .run_mobile_plugin("deleteItemAuth", payload)
+            .map_err(Into::into)
+    }
 }

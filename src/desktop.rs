@@ -48,4 +48,24 @@ impl<R: Runtime> SecureKeystore<R> {
             Err(err) => Err(err.into()),
         }
     }
+
+    /// `requireAuth: "os"` has no desktop equivalent — there's no per-item
+    /// biometric/device-credential gate on the OS credential store the way
+    /// there is on Android Keystore / iOS Keychain. Use
+    /// `requireAuth: "password"` on desktop instead.
+    pub fn set_item_os(&self, _payload: SetItemRequest) -> crate::Result<()> {
+        Err(crate::Error::UnsupportedPlatform)
+    }
+
+    pub fn get_item_os(&self, _payload: ItemKey) -> crate::Result<GetItemResponse> {
+        Err(crate::Error::UnsupportedPlatform)
+    }
+
+    /// A no-op rather than an error: nothing could ever have been written
+    /// here (`set_item_os` always fails), so cleanup code that deletes an
+    /// `"os"`-tagged key across all platforms shouldn't have to special-case
+    /// desktop.
+    pub fn delete_item_os(&self, _payload: ItemKey) -> crate::Result<()> {
+        Ok(())
+    }
 }
