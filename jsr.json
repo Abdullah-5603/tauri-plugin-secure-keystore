@@ -1,0 +1,12 @@
+{
+  "name": "@abdullah/tauri-plugin-secure-keystore",
+  "version": "0.0.1-beta.1",
+  "license": "MIT OR Apache-2.0",
+  "exports": "./guest-js/index.ts",
+  "imports": {
+    "@tauri-apps/api/core": "npm:@tauri-apps/api@^2.0.0/core"
+  },
+  "publish": {
+    "include": ["guest-js/**/*.ts", "README.md", "LICENSE-MIT", "LICENSE-APACHE"]
+  }
+}
