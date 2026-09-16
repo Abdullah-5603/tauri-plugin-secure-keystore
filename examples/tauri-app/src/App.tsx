@@ -3,19 +3,19 @@ import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 
 async function setItem(key: string, value: string): Promise<void> {
-  await invoke("plugin:mobile-keystore|set_item", { key, value });
+  await invoke("plugin:secure-keystore|set_item", { key, value });
 }
 
 async function getItem(key: string): Promise<string | null> {
   const result = await invoke<{ value: string | null }>(
-    "plugin:mobile-keystore|get_item",
+    "plugin:secure-keystore|get_item",
     { key },
   );
   return result.value ?? null;
 }
 
 async function deleteItem(key: string): Promise<void> {
-  await invoke("plugin:mobile-keystore|delete_item", { key });
+  await invoke("plugin:secure-keystore|delete_item", { key });
 }
 
 const KEY = "example_key";
@@ -33,7 +33,7 @@ function App() {
 
   return (
     <main className="container">
-      <h1>tauri-plugin-mobile-keystore example</h1>
+      <h1>tauri-plugin-secure-keystore example</h1>
 
       <input
         value={value}

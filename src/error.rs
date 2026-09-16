@@ -10,7 +10,7 @@ pub enum Error {
     #[error(transparent)]
     PluginInvoke(#[from] tauri::plugin::mobile::PluginInvokeError),
     #[cfg(desktop)]
-    #[error("tauri-plugin-mobile-keystore has no desktop backend — this plugin wraps mobile-only Keystore/Keychain APIs. Use tauri-plugin-stronghold (or similar) for desktop.")]
+    #[error("tauri-plugin-secure-keystore does not support desktop yet. Use tauri-plugin-stronghold (or similar) for desktop until this lands.")]
     UnsupportedPlatform,
 }
 

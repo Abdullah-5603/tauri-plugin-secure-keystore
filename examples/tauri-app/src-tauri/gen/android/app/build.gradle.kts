@@ -15,10 +15,10 @@ val tauriProperties = Properties().apply {
 
 android {
     compileSdk = 36
-    namespace = "io.github.abdullah5603.mobilekeystoreexample"
+    namespace = "io.github.abdullah5603.securekeystoreexample"
     defaultConfig {
         manifestPlaceholders["usesCleartextTraffic"] = "false"
-        applicationId = "io.github.abdullah5603.mobilekeystoreexample"
+        applicationId = "io.github.abdullah5603.securekeystoreexample"
         minSdk = 24
         targetSdk = 36
         versionCode = tauriProperties.getProperty("tauri.android.versionCode", "1").toInt()

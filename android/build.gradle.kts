@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.abdullah5603.mobilekeystore"
+    namespace = "io.github.abdullah5603.securekeystore"
     compileSdk = 36
 
     defaultConfig {

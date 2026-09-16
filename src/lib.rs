@@ -17,23 +17,23 @@ mod models;
 pub use error::{Error, Result};
 
 #[cfg(desktop)]
-use desktop::MobileKeystore;
+use desktop::SecureKeystore;
 #[cfg(mobile)]
-use mobile::MobileKeystore;
+use mobile::SecureKeystore;
 
-/// Extension trait, accessible via `app_handle.mobile_keystore()`.
-pub trait MobileKeystoreExt<R: Runtime> {
-    fn mobile_keystore(&self) -> &MobileKeystore<R>;
+/// Extension trait, accessible via `app_handle.secure_keystore()`.
+pub trait SecureKeystoreExt<R: Runtime> {
+    fn secure_keystore(&self) -> &SecureKeystore<R>;
 }
 
-impl<R: Runtime, T: Manager<R>> MobileKeystoreExt<R> for T {
-    fn mobile_keystore(&self) -> &MobileKeystore<R> {
-        self.state::<MobileKeystore<R>>().inner()
+impl<R: Runtime, T: Manager<R>> SecureKeystoreExt<R> for T {
+    fn secure_keystore(&self) -> &SecureKeystore<R> {
+        self.state::<SecureKeystore<R>>().inner()
     }
 }
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
-    Builder::new("mobile-keystore")
+    Builder::new("secure-keystore")
         .invoke_handler(tauri::generate_handler![
             commands::set_item,
             commands::get_item,
@@ -41,11 +41,11 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         ])
         .setup(|app, api| {
             #[cfg(mobile)]
-            let mobile_keystore = mobile::init(app, api)?;
+            let secure_keystore = mobile::init(app, api)?;
             #[cfg(desktop)]
-            let mobile_keystore = desktop::init(app, api)?;
+            let secure_keystore = desktop::init(app, api)?;
 
-            app.manage(mobile_keystore);
+            app.manage(secure_keystore);
             Ok(())
         })
         .build()

@@ -1,4 +1,4 @@
-package io.github.abdullah5603.mobilekeystore
+package io.github.abdullah5603.securekeystore
 
 import android.app.Activity
 import android.content.Context
@@ -43,7 +43,7 @@ class SetItemArgs {
  * never collide.
  */
 @TauriPlugin
-class MobileKeystorePlugin(private val activity: Activity) : Plugin(activity) {
+class SecureKeystorePlugin(private val activity: Activity) : Plugin(activity) {
     private val androidKeyStore = "AndroidKeyStore"
     private val ivSuffix = "_iv"
 
@@ -51,11 +51,11 @@ class MobileKeystorePlugin(private val activity: Activity) : Plugin(activity) {
         get() = activity.applicationContext.packageName
 
     private val keyAlias: String
-        get() = "$namespace.mobile_keystore_key"
+        get() = "$namespace.secure_keystore_key"
 
     private val prefs: SharedPreferences
         get() = activity.applicationContext.getSharedPreferences(
-            "$namespace.mobile_keystore",
+            "$namespace.secure_keystore",
             Context.MODE_PRIVATE
         )
 

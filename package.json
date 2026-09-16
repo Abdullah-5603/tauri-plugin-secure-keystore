@@ -1,7 +1,7 @@
 {
-  "name": "tauri-plugin-mobile-keystore-api",
+  "name": "tauri-plugin-secure-keystore-api",
   "version": "0.1.0",
-  "description": "JS bindings for tauri-plugin-mobile-keystore.",
+  "description": "JS bindings for tauri-plugin-secure-keystore.",
   "license": "MIT OR Apache-2.0",
   "authors": ["Abdullah <abdullah72308@gmail.com>"],
   "type": "module",

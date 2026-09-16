@@ -20,7 +20,7 @@ Allows storing, reading, and deleting encrypted key-value items.
 <tr>
 <td>
 
-`mobile-keystore:allow-delete-item`
+`secure-keystore:allow-delete-item`
 
 </td>
 <td>
@@ -33,7 +33,7 @@ Enables the delete_item command without any pre-configured scope.
 <tr>
 <td>
 
-`mobile-keystore:deny-delete-item`
+`secure-keystore:deny-delete-item`
 
 </td>
 <td>
@@ -46,7 +46,7 @@ Denies the delete_item command without any pre-configured scope.
 <tr>
 <td>
 
-`mobile-keystore:allow-get-item`
+`secure-keystore:allow-get-item`
 
 </td>
 <td>
@@ -59,7 +59,7 @@ Enables the get_item command without any pre-configured scope.
 <tr>
 <td>
 
-`mobile-keystore:deny-get-item`
+`secure-keystore:deny-get-item`
 
 </td>
 <td>
@@ -72,7 +72,7 @@ Denies the get_item command without any pre-configured scope.
 <tr>
 <td>
 
-`mobile-keystore:allow-set-item`
+`secure-keystore:allow-set-item`
 
 </td>
 <td>
@@ -85,7 +85,7 @@ Enables the set_item command without any pre-configured scope.
 <tr>
 <td>
 
-`mobile-keystore:deny-set-item`
+`secure-keystore:deny-set-item`
 
 </td>
 <td>

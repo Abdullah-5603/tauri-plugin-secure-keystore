@@ -6,6 +6,6 @@
   "permissions": [
     "core:default",
     "opener:default",
-    "mobile-keystore:default"
+    "secure-keystore:default"
   ]
 }

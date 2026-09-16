@@ -1,7 +1,7 @@
-# tauri-plugin-mobile-keystore
+# tauri-plugin-secure-keystore
 
-Encrypted key-value storage for Tauri 2 mobile apps, backed by the
-**Android Keystore** (iOS Keychain planned — see [Status](#status)).
+Encrypted key-value storage for Tauri 2 apps, backed by the
+**Android Keystore** (iOS Keychain and desktop planned — see [Status](#status)).
 
 ## Why this exists
 
@@ -34,10 +34,11 @@ at `@impierce/tauri-plugin-keystore` instead.
 - 🚧 iOS — not implemented yet. `src/mobile.rs` only registers the Android
   plugin; adding iOS means an `ios/` Swift package plus wiring
   `api.register_ios_plugin(...)`. Contributions welcome.
-- ❌ Desktop — not supported, on purpose (see [`src/desktop.rs`](src/desktop.rs)).
-  Every command returns a clear error rather than a silent, insecure
-  fallback. Pair this with a desktop-appropriate store (e.g.
-  `tauri-plugin-stronghold`) if your app also targets desktop.
+- 🚧 Desktop — not implemented yet (see [`src/desktop.rs`](src/desktop.rs)).
+  Every command currently returns a clear error rather than a silent,
+  insecure fallback. Until a desktop-appropriate backend lands, pair this
+  with something like `tauri-plugin-stronghold` if your app also targets
+  desktop.
 
 ## Install
 
@@ -45,11 +46,11 @@ at `@impierce/tauri-plugin-keystore` instead.
 
 ```toml
 [dependencies]
-tauri-plugin-mobile-keystore = "0.1"
+tauri-plugin-secure-keystore = "0.1"
 ```
 
 ```bash
-npm install tauri-plugin-mobile-keystore-api
+npm install tauri-plugin-secure-keystore-api
 # or: pnpm add / yarn add / bun add
 ```
 
@@ -57,7 +58,7 @@ npm install tauri-plugin-mobile-keystore-api
 
 ```rust
 tauri::Builder::default()
-    .plugin(tauri_plugin_mobile_keystore::init())
+    .plugin(tauri_plugin_secure_keystore::init())
     // ...
 ```
 
@@ -65,14 +66,14 @@ tauri::Builder::default()
 
 ```json
 {
-  "permissions": ["mobile-keystore:default"]
+  "permissions": ["secure-keystore:default"]
 }
 ```
 
 ## Usage
 
 ```ts
-import { setItem, getItem, deleteItem } from "tauri-plugin-mobile-keystore-api";
+import { setItem, getItem, deleteItem } from "tauri-plugin-secure-keystore-api";
 
 await setItem("session_token", token);
 const stored = await getItem("session_token"); // string | null
@@ -82,7 +83,7 @@ await deleteItem("session_token");
 ## How it works (Android)
 
 - A single AES-256-GCM key is generated inside `AndroidKeyStore` on first
-  use, aliased per-app (`<your.package.name>.mobile_keystore_key`) so
+  use, aliased per-app (`<your.package.name>.secure_keystore_key`) so
   multiple apps on one device never collide.
 - Each `setItem` call encrypts the value and stores the ciphertext + IV in
   a `SharedPreferences` file, also namespaced per-app.

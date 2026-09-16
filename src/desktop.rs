@@ -3,25 +3,25 @@ use tauri::{plugin::PluginApi, AppHandle, Runtime};
 
 use crate::models::*;
 
-/// This plugin exists specifically for the mobile Keystore/Keychain APIs —
-/// there is no desktop backend, and deliberately no silent fallback (an
-/// in-memory or plaintext-file stand-in would be actively misleading: code
+/// Desktop backend not implemented yet (tracked for a future release —
+/// see the README). Deliberately no silent fallback in the meantime: an
+/// in-memory or plaintext-file stand-in would be actively misleading, code
 /// that appears to persist a secret on desktop but doesn't, or does so
-/// insecurely, is worse than a clear error at the call site). If your app
-/// also runs on desktop, pair this with a desktop-appropriate secret store
-/// (e.g. `tauri-plugin-stronghold`) and pick the backend per-target.
+/// insecurely, is worse than a clear error at the call site. Until this
+/// lands, pair the plugin with a desktop-appropriate secret store (e.g.
+/// `tauri-plugin-stronghold`) and pick the backend per-target.
 pub fn init<R: Runtime, C: DeserializeOwned>(
     app: &AppHandle<R>,
     _api: PluginApi<R, C>,
-) -> crate::Result<MobileKeystore<R>> {
-    Ok(MobileKeystore { _app: app.clone() })
+) -> crate::Result<SecureKeystore<R>> {
+    Ok(SecureKeystore { _app: app.clone() })
 }
 
-pub struct MobileKeystore<R: Runtime> {
+pub struct SecureKeystore<R: Runtime> {
     _app: AppHandle<R>,
 }
 
-impl<R: Runtime> MobileKeystore<R> {
+impl<R: Runtime> SecureKeystore<R> {
     pub fn set_item(&self, _payload: SetItemRequest) -> crate::Result<()> {
         Err(crate::Error::UnsupportedPlatform)
     }

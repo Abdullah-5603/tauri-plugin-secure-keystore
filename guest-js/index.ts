@@ -5,7 +5,7 @@ import { invoke } from "@tauri-apps/api/core";
  * AES-256-GCM key. Overwrites any existing value for the same key.
  */
 export async function setItem(key: string, value: string): Promise<void> {
-  await invoke("plugin:mobile-keystore|set_item", { key, value });
+  await invoke("plugin:secure-keystore|set_item", { key, value });
 }
 
 /**
@@ -14,7 +14,7 @@ export async function setItem(key: string, value: string): Promise<void> {
  */
 export async function getItem(key: string): Promise<string | null> {
   const result = await invoke<{ value: string | null }>(
-    "plugin:mobile-keystore|get_item",
+    "plugin:secure-keystore|get_item",
     { key },
   );
   return result.value ?? null;
@@ -22,5 +22,5 @@ export async function getItem(key: string): Promise<string | null> {
 
 /** Remove the value stored under `key`, if any. */
 export async function deleteItem(key: string): Promise<void> {
-  await invoke("plugin:mobile-keystore|delete_item", { key });
+  await invoke("plugin:secure-keystore|delete_item", { key });
 }
