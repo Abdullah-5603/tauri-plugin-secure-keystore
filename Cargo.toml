@@ -8,7 +8,7 @@ repository = "https://github.com/Abdullah-5603/tauri-plugin-secure-keystore"
 edition = "2021"
 rust-version = "1.77.2"
 keywords = ["tauri", "plugin", "keystore", "keychain", "android"]
-categories = ["gui", "os::android-apis"]
+categories = ["gui", "os::android-apis", "cryptography"]
 links = "tauri-plugin-secure-keystore"
 
 [dependencies]
