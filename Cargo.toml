@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-secure-keystore"
-version = "0.1.0"
+version = "0.0.1-beta.1"
 description = "Encrypted key-value storage backed by the Android Keystore (iOS Keychain and desktop planned), with no biometric-enrollment requirement."
 authors = ["Abdullah <abdullah72308@gmail.com>"]
 license = "MIT OR Apache-2.0"

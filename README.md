@@ -46,7 +46,7 @@ at `@impierce/tauri-plugin-keystore` instead.
 
 ```toml
 [dependencies]
-tauri-plugin-secure-keystore = "0.1"
+tauri-plugin-secure-keystore = "0.0.1-beta.1"
 ```
 
 ```bash
