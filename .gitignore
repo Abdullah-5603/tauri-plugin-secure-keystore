@@ -20,6 +20,16 @@ dist
 **/gen/android/local.properties
 **/gen/android/.idea
 
+# iOS build output (any depth — the plugin's own ios/ AND every example
+# app's src-tauri/gen/apple/ produce these)
+**/ios/.build
+**/ios/.tauri
+**/ios/Packages
+**/ios/*.xcodeproj
+**/ios/Package.resolved
+**/gen/apple/**/build
+**/gen/apple/**/DerivedData
+
 # Editor
 .vscode/*
 !.vscode/extensions.json

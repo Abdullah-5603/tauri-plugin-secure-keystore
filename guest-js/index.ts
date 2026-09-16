@@ -1,8 +1,9 @@
 import { invoke } from "@tauri-apps/api/core";
 
 /**
- * Store a value under `key`, encrypted with an Android Keystore-backed
- * AES-256-GCM key. Overwrites any existing value for the same key.
+ * Store a value under `key`, encrypted at rest by the platform's secure
+ * storage (Android Keystore AES-256-GCM, or the iOS Keychain). Overwrites
+ * any existing value for the same key.
  */
 export async function setItem(key: string, value: string): Promise<void> {
   await invoke("plugin:secure-keystore|set_item", { key, value });

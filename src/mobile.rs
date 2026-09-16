@@ -6,23 +6,26 @@ use tauri::{
 
 use crate::models::*;
 
+#[cfg(target_os = "android")]
 const PLUGIN_IDENTIFIER: &str = "io.github.abdullah5603.securekeystore";
 
-// iOS (Keychain) isn't implemented yet — Android ships first. Add an
-// `ios/` Swift package + `api.register_ios_plugin(...)` call here when
-// that lands; until then this file only handles Android, and `#[cfg(mobile)]`
-// callers on iOS will fail to link (tracked as a known gap, see README).
+#[cfg(target_os = "ios")]
+tauri::ios_plugin_binding!(init_plugin_secure_keystore);
+
 pub fn init<R: Runtime, C: DeserializeOwned>(
     _app: &AppHandle<R>,
     api: PluginApi<R, C>,
 ) -> crate::Result<SecureKeystore<R>> {
+    #[cfg(target_os = "android")]
     let handle = api.register_android_plugin(PLUGIN_IDENTIFIER, "SecureKeystorePlugin")?;
+    #[cfg(target_os = "ios")]
+    let handle = api.register_ios_plugin(init_plugin_secure_keystore)?;
 
     Ok(SecureKeystore(handle))
 }
 
 /// Access to the encrypted key-value store, backed by the Android Keystore
-/// (iOS Keychain is not wired up yet — see the README).
+/// or the iOS Keychain.
 pub struct SecureKeystore<R: Runtime>(PluginHandle<R>);
 
 impl<R: Runtime> SecureKeystore<R> {
