@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.2
+
+- **Desktop: encrypted key-value storage via the OS credential store**
+  (Keychain Services on macOS, Credential Manager on Windows, Secret
+  Service on Linux), using the [`keyring`](https://crates.io/crates/keyring)
+  crate. Items are namespaced by the app's `identifier`
+  (`<identifier>.secure_keystore` as the credential service). `getItem` on
+  an absent key resolves to `null`, matching Android/iOS — no more
+  `UnsupportedPlatform` error on desktop.
+- No breaking changes to the Android/iOS backends or the JS/Rust API.
+
 ## 0.0.1
 
 First stable release. Same API surface and storage behavior as

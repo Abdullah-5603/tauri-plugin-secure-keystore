@@ -1,7 +1,7 @@
 {
   "name": "tauri-plugin-secure-keystore",
-  "version": "0.0.1",
-  "description": "JS bindings for tauri-plugin-secure-keystore: encrypted key-value storage backed by the Android Keystore and iOS Keychain.",
+  "version": "0.0.2",
+  "description": "JS bindings for tauri-plugin-secure-keystore: encrypted key-value storage backed by the Android Keystore, iOS Keychain, and the desktop OS credential store.",
   "license": "MIT OR Apache-2.0",
   "author": "Abdullah <abdullah72308@gmail.com>",
   "repository": {
@@ -19,6 +19,7 @@
     "keychain",
     "android",
     "ios",
+    "desktop",
     "encryption",
     "secure-storage"
   ],

@@ -1,16 +1,17 @@
 # tauri-plugin-secure-keystore
 
 Encrypted key-value storage for Tauri 2 apps, backed by the
-**Android Keystore** and **iOS Keychain** (desktop planned — see [Status](#status)).
-No biometric enrollment required — it works on every device, not just the
-ones with Face ID / fingerprint / screen-lock set up.
+**Android Keystore**, **iOS Keychain**, and — on desktop — the OS credential
+store (**macOS Keychain Services**, **Windows Credential Manager**,
+**Linux Secret Service**). No biometric enrollment required — it works on
+every device, not just the ones with Face ID / fingerprint / screen-lock
+set up.
 
 ## Use cases
 
-Reach for this plugin whenever your app needs to persist a **secret** on a
-mobile device *silently* — read on app launch, no user interaction — rather
-than a value that's fine to keep in plain `localStorage` or an unencrypted
-file:
+Reach for this plugin whenever your app needs to persist a **secret**
+*silently* — read on app launch, no user interaction — rather than a value
+that's fine to keep in plain `localStorage` or an unencrypted file:
 
 - **Session / refresh tokens** — keep a user logged in across app restarts
   without storing the token in plaintext on disk.
@@ -22,8 +23,12 @@ file:
   without prompting the user every time.
 - **Device-bound secrets** you deliberately do **not** want synced across a
   user's devices (iOS items are `ThisDeviceOnly`; Android keys are
-  per-device Keystore material) — e.g. a per-install device identifier used
-  for attestation.
+  per-device Keystore material; desktop entries live in that machine's own
+  credential store) — e.g. a per-install device identifier used for
+  attestation.
+- **Cross-platform apps** that need the same `setItem`/`getItem`/`deleteItem`
+  calls to do the right thing on mobile *and* desktop, without branching on
+  `platform()` in your own code.
 
 If your app *should* require a biometric prompt before a secret is
 readable, this plugin's trade-off is the wrong one for you — see
@@ -46,26 +51,26 @@ Two other options were evaluated first and both fell short:
   gap for apps that need to work on any device, not just ones with
   biometrics set up.
 
-This plugin picks a different trade-off: on Android, the Keystore-backed AES
-key is created **without** `setUserAuthenticationRequired(true)`; on iOS,
-items are stored with `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly`
-rather than a `SecAccessControl` that requires biometrics. Both backends are
-still hardware-backed where the platform supports it and never leave the
-device — a compromised app process can't extract the raw key material on
-Android, and iOS Keychain items are marked device-only (no iCloud sync) —
-but neither requires biometric enrollment or gates reads behind a biometric
-prompt. If you need the stronger "requires biometrics to decrypt" guarantee,
-this plugin is not that; look at `@impierce/tauri-plugin-keystore` instead.
+This plugin picks a different trade-off across every platform it supports:
+on Android, the Keystore-backed AES key is created **without**
+`setUserAuthenticationRequired(true)`; on iOS, items are stored with
+`kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly` rather than a
+`SecAccessControl` that requires biometrics; on desktop, items go straight
+into the OS credential store (Keychain Services / Credential Manager /
+Secret Service) with no OS-password re-prompt attached. Every backend
+still keeps the secret out of your app's own plaintext files and out of
+reach of a casual disk read — but none of them require biometric enrollment
+or gate reads behind a prompt. If you need the stronger "requires
+biometrics to decrypt" guarantee, this plugin is not that; look at
+`@impierce/tauri-plugin-keystore` instead.
 
 ## Status
 
 - ✅ Android — implemented, Keystore-backed AES-256-GCM.
 - ✅ iOS — implemented, Keychain-backed (`kSecClassGenericPassword`).
-- 🚧 Desktop — not implemented yet (see [`src/desktop.rs`](src/desktop.rs)).
-  Every command currently returns a clear error rather than a silent,
-  insecure fallback. Until a desktop-appropriate backend lands, pair this
-  with something like `tauri-plugin-stronghold` if your app also targets
-  desktop.
+- ✅ Desktop — implemented via [`keyring`](https://crates.io/crates/keyring),
+  backed by Keychain Services (macOS), Credential Manager (Windows), and
+  the Secret Service (Linux — GNOME Keyring / KWallet).
 
 ## Install
 
@@ -73,7 +78,7 @@ this plugin is not that; look at `@impierce/tauri-plugin-keystore` instead.
 
 ```toml
 [dependencies]
-tauri-plugin-secure-keystore = "0.0.1"
+tauri-plugin-secure-keystore = "0.0.2"
 ```
 
 ```bash
@@ -162,6 +167,19 @@ async fn restore_session(app: tauri::AppHandle) -> Result<Option<String>, String
 - Items use `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly`: readable
   without a biometric/passcode prompt once the device has been unlocked
   once since boot, and never synced to iCloud or any other device.
+
+### Desktop
+
+- Each item is its own credential in the OS-native store, addressed by a
+  `service` string (`<your.app.identifier>.secure_keystore`, from
+  `tauri.conf.json`'s `identifier`) and a `username` equal to the item's
+  key — so, as on mobile, multiple apps on one machine never collide.
+- The concrete store is chosen per-OS by the [`keyring`](https://crates.io/crates/keyring)
+  crate at build time: Keychain Services on macOS, Credential Manager on
+  Windows, and the Secret Service D-Bus API on Linux (works with both
+  GNOME Keyring and KWallet).
+- `getItem` on a key that was never set (or was deleted) resolves to `null`
+  rather than raising — same contract as Android/iOS.
 
 ## License
 
