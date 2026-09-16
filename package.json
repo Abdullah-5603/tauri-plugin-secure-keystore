@@ -1,5 +1,5 @@
 {
-  "name": "tauri-plugin-secure-keystore-api",
+  "name": "tauri-plugin-secure-keystore",
   "version": "0.0.1-beta.1",
   "description": "JS bindings for tauri-plugin-secure-keystore.",
   "license": "MIT OR Apache-2.0",

@@ -50,7 +50,7 @@ tauri-plugin-secure-keystore = "0.0.1-beta.1"
 ```
 
 ```bash
-npm install tauri-plugin-secure-keystore-api
+npm install tauri-plugin-secure-keystore
 # or: pnpm add / yarn add / bun add
 ```
 
@@ -73,7 +73,7 @@ tauri::Builder::default()
 ## Usage
 
 ```ts
-import { setItem, getItem, deleteItem } from "tauri-plugin-secure-keystore-api";
+import { setItem, getItem, deleteItem } from "tauri-plugin-secure-keystore";
 
 await setItem("session_token", token);
 const stored = await getItem("session_token"); // string | null

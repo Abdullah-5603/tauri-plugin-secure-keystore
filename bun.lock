@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "tauri-plugin-secure-keystore-api",
+      "name": "tauri-plugin-secure-keystore",
       "dependencies": {
         "@tauri-apps/api": "^2.0.0",
       },
